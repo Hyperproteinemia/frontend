@@ -14,9 +14,10 @@ import {LoginComponent} from './login/login.component';
 import {HttpClientModule, HttpClient, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {configurationFactory} from './util/hooks';
 import {AccountService} from './services/account.service';
-import {ReactiveFormsModule} from '@angular/forms';
-import {JwtInterceptor} from "./util/jwt.interceptor";
-import { SignupComponent } from './signup/signup.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {JwtInterceptor} from './util/jwt.interceptor';
+import {SignupComponent} from './signup/signup.component';
+import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 
 @NgModule({
   declarations: [
@@ -35,6 +36,8 @@ import { SignupComponent } from './signup/signup.component';
     AngularYandexMapsModule.forRoot(environment.api_key),
     HttpClientModule,
     ReactiveFormsModule,
+    CKEditorModule,
+    FormsModule
   ],
   providers: [
     {
