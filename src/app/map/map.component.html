@@ -43,14 +43,14 @@
   </div>
 </clr-modal>
 
-<clr-modal class="article" *ngIf="currentArticle" [clrModalOpen]="articleOpened" [clrModalClosable]="false">
+<clr-modal class="article" *ngIf="currentArticle" [(clrModalOpen)]="articleOpened">
   <h3 class="modal-title">{{currentArticle.heading}}
-    <button type="button" class="btn btn-icon btn-link" aria-label="home" (click)="closeArticle(false)">
-      <clr-icon shape="times"></clr-icon>
-    </button>
   </h3>
   <div class="modal-body">
-    <div class="p3">{{currentArticle.username}}</div>
+    <div class="p3">Written by
+      <a [routerLink]="'/profile/' + currentArticle.username">{{currentArticle.username}}</a>,
+      {{currentArticle.lastUpdate.epochSecond * 1000 | date}}
+    </div>
     <div [innerHTML]="currentArticle.content"></div>
   </div>
 </clr-modal>

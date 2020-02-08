@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectorRef, Component, NgZone, OnInit, ViewEncapsulation} from '@angular/core';
 import {ILoadEvent} from 'angular8-yandex-maps/lib/types/types';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {AreaService} from '../services/area.service';
@@ -56,7 +56,8 @@ export class MapComponent implements OnInit {
   constructor(private cdr: ChangeDetectorRef,
               private areaService: AreaService,
               private tagService: TagsService,
-              private articleService: ArticleService) {
+              private articleService: ArticleService,
+              private ngZone: NgZone) {
   }
 
   ngOnInit() {
@@ -149,7 +150,8 @@ export class MapComponent implements OnInit {
         area.area.radius
       ], {}, this.circleParams);
       circle.events.add('click', (event) => {
-        this.showArticle(area.articleId);
+        this.ngZone.run(() => this.showArticle(area.articleId))
+        ;
       });
       this.map.geoObjects.add(circle);
     });
