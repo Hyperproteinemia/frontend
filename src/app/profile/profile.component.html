@@ -1,8 +1,11 @@
-<h3>Username</h3>
-<div class="kek">
-<img src="https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=2ahUKEwi1joKjmsLnAhWIs4sKHc7JDIYQjRx6BAgBEAQ&url=https%3A%2F%2Fmusic.yandex.ru%2Fartist%2F4622988&psig=AOvVaw2hZB03OKghig0WCYG20Mox&ust=1581259883614033">
+<div *ngIf="user == undefined">
+    User {{username}} is not found!
+</div>
+<div *ngIf="user != undefined">
+<h3>{{user.username}}</h3>
+<img src="">
 <div class="bio-text">
-
+    BIO
 </div>
 </div>
 

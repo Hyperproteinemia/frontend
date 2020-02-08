@@ -11,7 +11,7 @@ const routes: Routes = [
   {path: '', redirectTo: 'map', pathMatch:  'full'},
   {path: 'map', component: MapComponent},
   {path: 'qa', component: QaComponent},
-  {path: 'profile', component: ProfileComponent},
+  {path: 'profile/:username', component: ProfileComponent},
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
 ];

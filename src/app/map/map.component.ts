@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Tag } from '../entities/tag';
+import { TagsService } from '../services/tags.service';
 
 @Component({
   selector: 'app-map',
@@ -7,10 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MapComponent implements OnInit {
 
-  availableTags: string[] = ['Food', 'Excursion', 'Alcohol', 'Museums', 'Literature'];
-  appliedTags: string[] = [];
+  availableTags: Tag[] = [];
+  appliedTags: Tag[] = [];
 
-  addTagFilter(tag: string) {
+  addTagFilter(tag: Tag) {
     let index = this.availableTags.indexOf(tag);
     if (index > -1) {
       this.appliedTags.push(tag);
@@ -18,7 +20,7 @@ export class MapComponent implements OnInit {
     }
   }
 
-  removeTagFilter(tag: string) {
+  removeTagFilter(tag: Tag) {
     let index = this.appliedTags.indexOf(tag);
     if (index > -1) {
       this.availableTags.push(tag);
@@ -26,8 +28,12 @@ export class MapComponent implements OnInit {
     }
   }
 
-  constructor() { }
+  constructor(private tagService: TagsService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.tagService.getAllTags().subscribe(data=> {
+      this.availableTags = [...data, ...this.availableTags];
+    });
+  }
 
 }
