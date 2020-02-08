@@ -9,25 +9,27 @@
         <img src="" class="avatar">
     </div>
     <div class="clr-col-sm-12 clr-col-md-9">
-        <div *ngIf="user.country != undefined">
+        <div id="country-output" *ngIf="user.country != undefined">
             <h3>Country</h3>
             {{user.country}}
         </div>
-        <div *ngIf="user.city != undefined">
+        <input clrInput id="country-input" class="invisible" [(ngModel)]="user.country" placeholder="Your country">
+        <div id="city-output" *ngIf="user.city != undefined">
             <h3>City</h3>
             {{user.city}}
         </div>
+        <input clrInput id="city-input" class="invisible" [(ngModel)]="user.city" placeholder="Your city">
         <h3>Biography</h3>
         <div id="bio-immutable">
             {{user.bio}}
-            <button *ngIf="myName != undefined && myName == user.username" (click)="openEditor()" class="btn btn-outline">Edit</button>
+            <button *ngIf="myName != undefined && myName == user.username" (click)="openEditor()" class="btn btn-outline">Edit profile</button>
         </div>
 
         <div id="bio-mutable" class="invisible">
             <form>
                 <textarea clrTextarea [(ngModel)]="user.bio" name="description" class="expandible-textarea" required></textarea>
             </form>
-            <button (click)="saveBio()" class="btn btn-primary">Save</button>
+            <button (click)="saveBio()" class="btn btn-primary">Save profile</button>
         </div>
         
     </div>
@@ -35,10 +37,17 @@
 </div>
 <div class="contacts">
     <h3>Contacts</h3>
-    <button *ngIf="areContactsPrivate" class="btn btn-outline">Request contacts</button>
+    <button *ngIf="areContactsPrivate && myName !== user.username" class="btn btn-outline">Request contacts</button>
     <ul *ngIf="!areContactsPrivate">
-        <li *ngFor="let contact of contacts">contact.value</li>
+        <li *ngFor="let contact of contacts">{{contact.value}}</li>
     </ul>
+</div>
+<div id="contacts-input" class="invisible">
+    Input your contacts:
+    <input clrInput placeholder="Telegram" name="input" [(ngModel)]="telegramNumber" />
+    <input clrInput placeholder="WhatsApp" name="input" [(ngModel)]="whatsAppNumber" />
+    <input clrInput placeholder="Mobile phone" name="input" [(ngModel)]="mobilePhone" />
+    <input clrInput placeholder="Instagram" name="input" [(ngModel)]="instagramName" />
 </div>
 </div>
 </section>

@@ -16,7 +16,7 @@ export class UserService {
   }
 
   updateBio(user: User) {
-    return this.http.patch<User>('/user', user);
+    return this.http.patch<User>('api/user', user);
   }
 
   getContacts(username: string) : Observable<Contact[]> {
