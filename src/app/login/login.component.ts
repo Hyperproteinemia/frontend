@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../services/account.service';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
-import { User } from '../entities/user';
+import {Component, OnInit} from '@angular/core';
+import {AccountService} from '../services/account.service';
+import {FormGroup, FormControl} from '@angular/forms';
+import {Router} from '@angular/router';
+import {User} from '../entities/user';
 
 @Component({
   selector: 'app-login',
@@ -16,19 +16,21 @@ export class LoginComponent implements OnInit {
     password: new FormControl(''),
   });
 
+  constructor(private auth: AccountService, private router: Router) {
+  }
+
+  ngOnInit(): void {
+  }
+
   login() {
-    this.auth.login(this.loginControl.get('username').value, this.loginControl.get('password').value).subscribe(success => {
-      this.auth.user = { username: this.loginControl.get('username').value, email: ''};
-      this.router.navigateByUrl('/map');
-    }, 
+    this.auth.login(this.loginControl.value.username, this.loginControl.value.password).subscribe(user => {
+        console.log(user);
+        this.auth.user = user;
+        this.router.navigateByUrl('/map');
+      },
       error => {
         document.getElementById('error-label').classList.add('active');
       });
-  }
-
-  constructor(private auth: AccountService, private router: Router) { }
-
-  ngOnInit(): void {
   }
 
 }

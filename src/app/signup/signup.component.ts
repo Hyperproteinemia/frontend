@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../services/account.service';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {AccountService} from '../services/account.service';
+import {FormGroup, FormControl} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -17,8 +17,8 @@ export class SignupComponent implements OnInit {
     repeatPassword: new FormControl(''),
   });
 
-  showError(errorMsg : string) {
-    let errorLabel = document.getElementById('error-label');
+  showError(errorMsg: string) {
+    const errorLabel = document.getElementById('error-label');
     errorLabel.innerHTML = errorMsg;
     document.getElementById('error-label').classList.add('active');
   }
@@ -28,17 +28,19 @@ export class SignupComponent implements OnInit {
     const password = this.registerControl.value.password;
     const email = this.registerControl.value.email;
     const repeatPassword = this.registerControl.value.repeatPassword;
-    if (password == repeatPassword) {
-      this.auth.register(username, email, password).subscribe(success=> {
+    if (password === repeatPassword) {
+      this.auth.signUp(username, email, password).subscribe(success => {
         this.router.navigateByUrl('/map');
       }, error => {
         this.showError('Username is already occuied!');
       });
-    } else
+    } else {
       this.showError('Passwords do not match!');
+    }
   }
 
-  constructor(private auth: AccountService, private router: Router) { }
+  constructor(private auth: AccountService, private router: Router) {
+  }
 
   ngOnInit(): void {
   }
