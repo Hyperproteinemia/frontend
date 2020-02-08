@@ -11,10 +11,11 @@ import {ProfileComponent} from './profile/profile.component';
 import {AngularYandexMapsModule} from 'angular8-yandex-maps';
 import {environment} from 'src/environments/environment';
 import {LoginComponent} from './login/login.component';
-import {HttpClientModule, HttpClient} from '@angular/common/http';
+import {HttpClientModule, HttpClient, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {configurationFactory} from './util/hooks';
 import {AccountService} from './services/account.service';
-import { ReactiveFormsModule } from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
+import {JwtInterceptor} from "./util/jwt.interceptor";
 
 @NgModule({
   declarations: [
@@ -39,6 +40,11 @@ import { ReactiveFormsModule } from '@angular/forms';
       useFactory: configurationFactory,
       multi: true,
       deps: [HttpClient, AccountService]
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
     }
   ],
 
