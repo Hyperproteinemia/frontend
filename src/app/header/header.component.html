@@ -15,7 +15,7 @@
             <clr-icon shape="caret down"></clr-icon>
         </button>
         <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-            <a routerLink="profile" clrDropdownItem>Profile</a>
+            <a [routerLink]="'profile/' + auth.user.username" clrDropdownItem>Profile</a>
             <a (click)="logout()" clrDropdownItem>Log out</a>
         </clr-dropdown-menu>
     </clr-dropdown>

@@ -9,7 +9,9 @@ import { AccountService } from '../services/account.service';
 export class HeaderComponent implements OnInit {
 
   logout() {
-    this.auth.logout();
+    this.auth.logout().subscribe(res=>{
+      localStorage.removeItem('token');
+    });
   }
 
   constructor(public auth: AccountService) { }

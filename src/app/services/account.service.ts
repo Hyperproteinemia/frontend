@@ -24,7 +24,8 @@ export class AccountService {
   }
 
   public logout() {
-    return this.http.get('/api/auth/logout');
+    this.user = undefined;
+    return this.http.post('/api/auth/logout', {}, {responseType: 'text'});
   }
 
   public signUp(username: string, email: string, password: string) {

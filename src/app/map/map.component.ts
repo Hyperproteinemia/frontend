@@ -1,7 +1,9 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {IEvent, ILoadEvent} from 'angular8-yandex-maps/lib/types/types';
+import {ILoadEvent} from 'angular8-yandex-maps/lib/types/types';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {AreaService} from '../services/area.service';
+import {Tag} from '../entities/tag';
+import {TagsService} from '../services/tags.service';
 
 @Component({
   selector: 'app-map',
@@ -26,8 +28,8 @@ export class MapComponent implements OnInit {
   private circle;
   editorOpened = false;
 
-  availableTags: string[] = ['Food', 'Excursion', 'Alcohol', 'Museums', 'Literature'];
-  appliedTags: string[] = [];
+  availableTags: Tag[] = [];
+  appliedTags: Tag[] = [];
   addButtonParams = {
     data: {
       content: 'New Area'
@@ -40,23 +42,26 @@ export class MapComponent implements OnInit {
   };
 
   constructor(private cdr: ChangeDetectorRef,
-              private areaService: AreaService) {
+              private areaService: AreaService,
+              private tagService: TagsService) {
   }
 
   ngOnInit() {
+    this.tagService.getAllTags().subscribe(data => {
+      this.availableTags = [...data, ...this.availableTags];
+    });
   }
 
-
-  addTagFilter(tag: string) {
-    const index = this.availableTags.indexOf(tag);
+  addTagFilter(tag: Tag) {
+    let index = this.availableTags.indexOf(tag);
     if (index > -1) {
       this.appliedTags.push(tag);
       this.availableTags.splice(index, 1);
     }
   }
 
-  removeTagFilter(tag: string) {
-    const index = this.appliedTags.indexOf(tag);
+  removeTagFilter(tag: Tag) {
+    let index = this.appliedTags.indexOf(tag);
     if (index > -1) {
       this.availableTags.push(tag);
       this.appliedTags.splice(index, 1);
