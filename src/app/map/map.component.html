@@ -1,0 +1,25 @@
+<div class="content-container">
+    <div class="content-area">
+        <angular-yandex-map [center]="[55.751952, 37.600739]" [zoom]="12">
+        </angular-yandex-map>
+    </div>
+<nav class="sidenav">
+    <section class="sidenav-content">
+        <section class="nav-group collapsible">
+            <input id="availableTagsTab" type="checkbox">
+            <label for="availableTagsTab">Filter by</label>
+            <ul class="nav-list">
+                <li *ngFor="let availableTag of availableTags"><span (click)="addTagFilter(availableTag)" class="label clickable">{{availableTag}}</span></li>
+            </ul>
+        </section>
+        <section class="nav-group collapsible">
+            <input id="appliedTagsTab" type="checkbox">
+            <label for="appliedTagsTab">Filtered by</label>
+            <ul class="nav-list">
+                <li *ngFor="let appliedTag of appliedTags"><span (click)="removeTagFilter(appliedTag)" class="label clickable">{{appliedTag}}</span></li>
+            </ul>
+        </section>
+    </section>
+</nav>
+
+</div>
