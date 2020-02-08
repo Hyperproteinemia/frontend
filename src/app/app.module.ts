@@ -14,6 +14,7 @@ import {LoginComponent} from './login/login.component';
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 import {configurationFactory} from './util/hooks';
 import {AccountService} from './services/account.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import {AccountService} from './services/account.service';
     BrowserAnimationsModule,
     AngularYandexMapsModule.forRoot(environment.api_key),
     HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {
@@ -39,6 +41,7 @@ import {AccountService} from './services/account.service';
       deps: [HttpClient, AccountService]
     }
   ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule {
