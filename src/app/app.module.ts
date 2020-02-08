@@ -31,12 +31,12 @@ import { AccountService } from './services/account.service';
     AngularYandexMapsModule.forRoot(environment.api_key),
     HttpClientModule,
   ],
-  providers: [
+  providers: [/*
     {provide: APP_INITIALIZER,
     useFactory: configurationFactory,
     multi: true,
     deps: [HttpClient, AccountService]}
-  ],
+    */],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
