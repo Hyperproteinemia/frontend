@@ -1,1 +1,23 @@
-<p>header works!</p>
+<header class="header-6">
+<div class="branding">
+    <a routerLink="map" routerLinkActive="active" class="nav-link">
+        <span class="title">DiscoverMoscow</span>
+    </a>
+</div>
+<div class="header-nav">
+    <a routerLink="map" routerLinkActive="active" class="nav-link nav-text">Map</a>
+    <a routerLink="qa" routerLinkActive="active" class="nav-link nav-text">Q&A</a>
+</div>
+<div class="header-actions">
+    <clr-dropdown>
+        <button class="nav-icon" clrDropdownTrigger>
+            <clr-icon shape="user"></clr-icon>
+            <clr-icon shape="caret down"></clr-icon>
+        </button>
+        <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+            <a routerLink="profile" clrDropdownItem>Profile</a>
+            <a href="logout" clrDropdownItem>Log out</a>
+        </clr-dropdown-menu>
+    </clr-dropdown>
+</div>
+</header>
