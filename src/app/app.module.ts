@@ -8,6 +8,8 @@ import { ClarityModule } from '@clr/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MapComponent } from './map/map.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AngularYandexMapsModule } from 'angular8-yandex-maps';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import { ProfileComponent } from './profile/profile.component';
     AppRoutingModule,
     ClarityModule,
     BrowserAnimationsModule,
+    AngularYandexMapsModule.forRoot(environment.api_key),
   ],
   providers: [],
   bootstrap: [AppComponent]
