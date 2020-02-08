@@ -4,6 +4,7 @@ export class Article {
   username?: string;
   heading: string;
   usersToLike?: string[];
+  tags?: { id: number, name: string }[];
   lastUpdate?: {
     epochSecond: number,
     nano: number

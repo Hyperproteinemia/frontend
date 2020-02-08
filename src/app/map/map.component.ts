@@ -7,6 +7,7 @@ import {TagsService} from '../services/tags.service';
 import {AreaDto} from '../entities/area-dto';
 import {ArticleService} from '../services/article.service';
 import {Article} from '../entities/article';
+import {IDropdownSettings} from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-map',
@@ -41,6 +42,8 @@ export class MapComponent implements OnInit {
   currentArticle: Article;
   availableTags: Tag[] = [];
   appliedTags: Tag[] = [];
+  dropdownList: any;
+  selectedItems: any;
   addButtonParams = {
     data: {
       content: 'New Area'
@@ -52,6 +55,13 @@ export class MapComponent implements OnInit {
     }
   };
   articleOpened = false;
+  dropdownSettings: IDropdownSettings = {
+    singleSelection: false,
+    selectAllText: 'Select All',
+    unSelectAllText: 'UnSelect All',
+    itemsShowLimit: 3,
+    allowSearchFilter: true
+  };
 
   constructor(private cdr: ChangeDetectorRef,
               private areaService: AreaService,
@@ -62,24 +72,37 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     this.tagService.getAllTags().subscribe(data => {
-      this.availableTags = [...data, ...this.availableTags];
+      this.availableTags = data;
+      this.dropdownList = data.map(tag => ({id: tag.name, text: tag.name}));
     });
   }
 
   addTagFilter(tag: Tag) {
-    let index = this.availableTags.indexOf(tag);
+    const index = this.availableTags.indexOf(tag);
     if (index > -1) {
       this.appliedTags.push(tag);
       this.availableTags.splice(index, 1);
     }
+    this.applyFilters();
   }
 
   removeTagFilter(tag: Tag) {
-    let index = this.appliedTags.indexOf(tag);
+    const index = this.appliedTags.indexOf(tag);
     if (index > -1) {
       this.availableTags.push(tag);
       this.appliedTags.splice(index, 1);
     }
+    this.applyFilters();
+  }
+
+  applyFilters() {
+    console.log(this.appliedTags);
+    this.map.geoObjects.removeAll();
+    const tagNames = this.appliedTags.map(tag => tag.name);
+    const areas = this.areas.filter(area => {
+      return area.area.article.tags.some(tag => tagNames.includes(tag.name));
+    });
+    this.drawCircles(areas);
   }
 
   addButtonLoad(event: ILoadEvent) {
@@ -128,7 +151,7 @@ export class MapComponent implements OnInit {
     }, {
       heading: 'Heading',
       content: this.editorData,
-    }, []).subscribe(res => {
+    }, this.selectedItems.map(item => ({name: item.text}))).subscribe(res => {
       console.log(res);
     });
     this.editorData = '';
@@ -143,8 +166,9 @@ export class MapComponent implements OnInit {
     this.editorOpened = false;
   }
 
-  drawCircles() {
-    const circles = this.areas.forEach(area => {
+  drawCircles(areas?) {
+    areas = areas || this.areas;
+    const circles = areas.forEach(area => {
       const circle = new this.ymaps.Circle([
         [area.area.x, area.area.y],
         area.area.radius

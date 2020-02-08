@@ -18,6 +18,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {JwtInterceptor} from './util/jwt.interceptor';
 import {SignupComponent} from './signup/signup.component';
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
     HttpClientModule,
     ReactiveFormsModule,
     CKEditorModule,
-    FormsModule
+    FormsModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [
     {

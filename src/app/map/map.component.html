@@ -28,10 +28,17 @@
     </section>
   </nav>
 </div>
-<clr-modal [clrModalOpen]="editorOpened" (clrModalOpenChange)="onOpenedChange($event)" [clrModalClosable]="false">
+<clr-modal class="editor-model" [clrModalOpen]="editorOpened" (clrModalOpenChange)="onOpenedChange($event)"
+           [clrModalClosable]="false">
   <h3 class="modal-title">Area description</h3>
   <div class="modal-body">
     <ckeditor [editor]="editor" [config]="editorConfig" [(ngModel)]="editorData"></ckeditor>
+    <ng-multiselect-dropdown
+      [placeholder]="'Tags'"
+      [data]="dropdownList"
+      [settings]="dropdownSettings"
+      [(ngModel)]="selectedItems">
+    </ng-multiselect-dropdown>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline" (click)="cancel()">
