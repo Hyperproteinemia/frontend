@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { User } from '../entities/user';
 
 @Injectable({
@@ -11,15 +10,16 @@ export class AccountService {
   public user: User;
 
   login(username: string, password: string) {
-    return this.http.post(environment.server_url+'auth/login', {username, password});
+    return this.http.post('/api/auth/login', {username, password});
   }
 
   logout() {
-    return this.http.get(environment.server_url+'auth/logout');
+    this.user = undefined;
+    return this.http.get('/api/auth/logout');
   }
 
-  register(username: string, password: string) {
-    return this.http.post(environment.server_url+'auth/register', {username, password});
+  register(username: string, email: string, password: string) {
+    return this.http.post('/api/auth/signup', {username, email, password});
   }
 
   constructor(private http: HttpClient) {
