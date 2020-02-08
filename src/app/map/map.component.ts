@@ -1,14 +1,18 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ILoadEvent} from 'angular8-yandex-maps/lib/types/types';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {AreaService} from '../services/area.service';
 import {Tag} from '../entities/tag';
 import {TagsService} from '../services/tags.service';
+import {AreaDto} from '../entities/area-dto';
+import {ArticleService} from '../services/article.service';
+import {Article} from '../entities/article';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.less']
+  styleUrls: ['./map.component.less'],
+  encapsulation: ViewEncapsulation.None
 })
 export class MapComponent implements OnInit {
   clusterer = {
@@ -22,12 +26,19 @@ export class MapComponent implements OnInit {
     ]
   };
   editorData = '';
+  areas: AreaDto[];
   private ymaps;
   private map;
   private addButton;
   private circle;
+  private circleParams = {
+    fillColor: '#9ccde677',
+    strokeColor: '#658494',
+    strokeOpacity: 0.8,
+    strokeWidth: 2
+  };
   editorOpened = false;
-
+  currentArticle: Article;
   availableTags: Tag[] = [];
   appliedTags: Tag[] = [];
   addButtonParams = {
@@ -40,10 +51,12 @@ export class MapComponent implements OnInit {
       maxWidth: 150
     }
   };
+  articleOpened = false;
 
   constructor(private cdr: ChangeDetectorRef,
               private areaService: AreaService,
-              private tagService: TagsService) {
+              private tagService: TagsService,
+              private articleService: ArticleService) {
   }
 
   ngOnInit() {
@@ -77,12 +90,7 @@ export class MapComponent implements OnInit {
     this.circle = new this.ymaps.Circle([
       [55.76, 37.60],
       1000
-    ], {}, {
-      fillColor: '#9ccde677',
-      strokeColor: '#658494',
-      strokeOpacity: 0.8,
-      strokeWidth: 2
-    });
+    ], {}, this.circleParams);
     this.map.geoObjects.add(this.circle);
     this.circle.editor.startEditing();
     this.addButton.data.set('content', 'Add description');
@@ -98,6 +106,11 @@ export class MapComponent implements OnInit {
     console.log('map', event);
     this.ymaps = event.ymaps;
     this.map = event.instance;
+    this.areaService.getAreas().subscribe(areas => {
+      console.log(areas);
+      this.areas = areas;
+      this.drawCircles();
+    });
   }
 
   saveArea(event: MouseEvent) {
@@ -127,5 +140,32 @@ export class MapComponent implements OnInit {
   cancel() {
     this.addButton.events.once('click', this.openDescriptionEditor);
     this.editorOpened = false;
+  }
+
+  drawCircles() {
+    const circles = this.areas.forEach(area => {
+      const circle = new this.ymaps.Circle([
+        [area.area.x, area.area.y],
+        area.area.radius
+      ], {}, this.circleParams);
+      circle.events.add('click', (event) => {
+        this.showArticle(area.articleId);
+      });
+      this.map.geoObjects.add(circle);
+    });
+  }
+
+  showArticle(id) {
+    this.articleService.getArticle(id).subscribe(article => {
+      this.currentArticle = article;
+      this.articleOpened = true;
+      this.cdr.detectChanges();
+    });
+  }
+
+  closeArticle(event: boolean) {
+    console.log(322);
+    this.articleOpened = event;
+    this.cdr.detectChanges();
   }
 }
