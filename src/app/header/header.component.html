@@ -9,7 +9,7 @@
     <a routerLink="qa" routerLinkActive="active" class="nav-link nav-text">Q&A</a>
 </div>
 <div class="header-actions">
-    <clr-dropdown>
+    <clr-dropdown *ngIf="auth.user != undefined">
         <button class="nav-icon" clrDropdownTrigger>
             <clr-icon shape="user"></clr-icon>
             <clr-icon shape="caret down"></clr-icon>
@@ -19,5 +19,8 @@
             <a (click)="logout()" clrDropdownItem>Log out</a>
         </clr-dropdown-menu>
     </clr-dropdown>
+    <a *ngIf="auth.user == undefined" routerLink="login" class="nav-link nav-text">
+        Sign in
+    </a>
 </div>
 </header>
