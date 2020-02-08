@@ -1,11 +1,44 @@
+<section class="profile">
 <div *ngIf="user == undefined">
     User {{username}} is not found!
 </div>
 <div *ngIf="user != undefined">
-<h3>{{user.username}}</h3>
-<img src="">
-<div class="bio-text">
-    BIO
-</div>
-</div>
+<h2>{{user.username}}</h2>
+<div class="clr-row">
+    <div class="clr-col-sm-12 clr-col-md-3">
+        <img src="" class="avatar">
+    </div>
+    <div class="clr-col-sm-12 clr-col-md-9">
+        <div *ngIf="user.country != undefined">
+            <h3>Country</h3>
+            {{user.country}}
+        </div>
+        <div *ngIf="user.city != undefined">
+            <h3>City</h3>
+            {{user.city}}
+        </div>
+        <h3>Biography</h3>
+        <div id="bio-immutable">
+            {{user.bio}}
+            <button *ngIf="myName != undefined && myName == user.username" (click)="openEditor()" class="btn btn-outline">Edit</button>
+        </div>
 
+        <div id="bio-mutable" class="invisible">
+            <form>
+                <textarea clrTextarea [(ngModel)]="user.bio" name="description" class="expandible-textarea" required></textarea>
+            </form>
+            <button (click)="saveBio()" class="btn btn-primary">Save</button>
+        </div>
+        
+    </div>
+    
+</div>
+<div class="contacts">
+    <h3>Contacts</h3>
+    <button *ngIf="areContactsPrivate" class="btn btn-outline">Request contacts</button>
+    <ul *ngIf="!areContactsPrivate">
+        <li *ngFor="let contact of contacts">contact.value</li>
+    </ul>
+</div>
+</div>
+</section>
