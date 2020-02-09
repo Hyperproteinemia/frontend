@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
 import { User } from '../entities/user';
 import { Contact } from '../entities/contact';
+import { UserContactsService } from '../services/user-contacts.service';
 
 @Component({
   selector: 'app-mutable-profile',
@@ -26,7 +27,7 @@ export class MutableProfileComponent implements OnInit {
 
   constructor(private userService: UserService,
     private route: ActivatedRoute, private authService: AccountService,
-    private router: Router) { }
+    private router: Router, private userContactService: UserContactsService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -48,14 +49,14 @@ export class MutableProfileComponent implements OnInit {
   }
 
   saveContacts() {
-    if (this.telegramNumber != this.user.getTelegram())
-      this.user.setTelegram(this.telegramNumber);
-    if (this.whatsAppNumber != this.user.getWhatsApp())
-      this.user.setTelegram(this.telegramNumber);
-    if (this.mobilePhone != this.user.getMobileNumber())
-      this.user.setTelegram(this.telegramNumber);
-    if (this.instagramName != this.user.getInstagram())
-      this.user.setTelegram(this.telegramNumber);
+    if (this.telegramNumber != this.userContactService.getTelegram(this.user))
+    this.userContactService.setTelegram(this.user, this.telegramNumber);
+    if (this.whatsAppNumber != this.userContactService.getWhatsApp(this.user))
+    this.userContactService.setTelegram(this.user, this.telegramNumber);
+    if (this.mobilePhone != this.userContactService.getMobileNumber(this.user))
+      this.userContactService.setTelegram(this.user, this.telegramNumber);
+    if (this.instagramName != this.userContactService.getInstagram(this.user))
+    this.userContactService.setTelegram(this.user, this.telegramNumber);
     this.contacts = this.user.contacts;
   }
 
