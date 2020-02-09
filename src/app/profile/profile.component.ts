@@ -1,11 +1,11 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {AccountService} from '../services/account.service';
-import {UserService} from '../services/user.service';
-import {User} from '../entities/user';
-import {Request} from '../entities/request';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import { AccountService } from '../services/account.service';
+import { UserService } from '../services/user.service';
+import { User } from '../entities/user';
+import { Request } from '../entities/request';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import {RequestService} from '../services/request.service';
+import { RequestService } from '../services/request.service';
 
 @Component({
   selector: 'app-profile',
@@ -26,17 +26,18 @@ export class ProfileComponent implements OnInit {
   public incomingRequests: Request[];
 
   constructor(private userService: UserService,
-              private route: ActivatedRoute, private authService: AccountService,
-              private router: Router, private requestService: RequestService) {
+    private route: ActivatedRoute, private authService: AccountService,
+    private router: Router, private requestService: RequestService,
+    private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.username = params.username;
       this.userService.getUserById(params.username).subscribe(success => {
-          this.user = success;
-          this.areContactsPrivate = this.user.privateContacts;
-        },
+        this.user = success;
+        this.areContactsPrivate = this.user.privateContacts;
+      },
         error => {
           this.user = undefined;
         });
@@ -70,6 +71,26 @@ export class ProfileComponent implements OnInit {
   sendRequest() {
     this.requestService.sendRequest(this.username, this.requestMessage).subscribe(response => {
       this.opened = false;
+    });
+  }
+
+  acceptRequest(index: number) {
+    console.log(index);
+    this.requestService.acceptRequest(this.incomingRequests[index].from.username).subscribe(response => {
+      this.incomingRequests = this.incomingRequests.splice(index, 1);
+      console.log(this.incomingRequests);
+    });
+  }
+
+  declineRequest(index: number) {
+    console.log(index);
+    this.requestService.declineRequest(this.incomingRequests[index].from.username).subscribe(response => {
+      this.incomingRequests.splice(index, 1);
+      console.log(this.incomingRequests);
+      this.incomingRequests = [...this.incomingRequests];
+      console.log(this.incomingRequests);
+this.cdr.detectChanges();
+      console.log("heredecl");
     });
   }
 
