@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.auth.login(this.loginControl.value.username, this.loginControl.value.password).subscribe(user => {
-        console.log(user);
         this.auth.user = user;
         this.router.navigateByUrl('/map');
       },

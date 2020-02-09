@@ -17,8 +17,11 @@ import {AccountService} from './services/account.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {JwtInterceptor} from './util/jwt.interceptor';
 import {SignupComponent} from './signup/signup.component';
-import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
-import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
+import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
+import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
+import {QaComponent} from './qa/qa.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { QuestionComponent } from './qa/question/question.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,9 @@ import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
     MapComponent,
     ProfileComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    QaComponent,
+    QuestionComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +44,7 @@ import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
     ReactiveFormsModule,
     CKEditorModule,
     FormsModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
   ],
   providers: [
     {

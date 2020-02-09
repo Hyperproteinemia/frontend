@@ -1,1 +1,34 @@
-<p>qa works!</p>
+<div class="qa">
+  <button type="button" class="btn btn-icon" aria-label="home" (click)="openModal($event)">
+    <clr-icon shape="plus"></clr-icon>
+    Ask new question
+  </button>
+  <ng-container *ngFor="let question of questions">
+    <div class="card">
+      <div class="card-header">
+        {{question.username}}
+      </div>
+      <div class="card-block">
+        <div class="card-text">
+          {{question.text}}
+        </div>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-sm btn-link"><a [routerLink]="'/qa/' + question.id">Show more</a></button>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<clr-modal class="article" [(clrModalOpen)]="newQuestionOpened">
+  <h3 class="modal-title">Ask new question</h3>
+  <div class="modal-body">
+    <form class="example-form">
+      <textarea [(ngModel)]="questionText" class="textarea" placeholder="Ex. It makes me feel..."
+                [ngModelOptions]="{standalone: true}"></textarea>
+      <button type="button" class="btn btn-icon" aria-label="home" (click)="submitQuestion($event)">
+        ASK
+      </button>
+    </form>
+  </div>
+</clr-modal>

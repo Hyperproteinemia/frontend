@@ -96,7 +96,6 @@ export class MapComponent implements OnInit {
   }
 
   applyFilters() {
-    console.log(this.appliedTags);
     this.map.geoObjects.removeAll();
     const tagNames = this.appliedTags.map(tag => tag.name);
     const areas = this.areas.filter(area => {
@@ -127,19 +126,15 @@ export class MapComponent implements OnInit {
   }
 
   onMapLoad(event: ILoadEvent) {
-    console.log('map', event);
     this.ymaps = event.ymaps;
     this.map = event.instance;
     this.areaService.getAreas().subscribe(areas => {
-      console.log(areas);
       this.areas = areas;
       this.drawCircles();
     });
   }
 
   saveArea(event: MouseEvent) {
-    console.log(this.circle.geometry.getCoordinates());
-    console.log(this.circle.geometry.getRadius());
     this.editorOpened = false;
     this.map.geoObjects.remove(this.circle);
     this.addButton.data.set('content', 'New Area');
@@ -152,7 +147,6 @@ export class MapComponent implements OnInit {
       heading: 'Heading',
       content: this.editorData,
     }, this.selectedItems.map(item => ({name: item.text}))).subscribe(res => {
-      console.log(res);
     });
     this.editorData = '';
   }
@@ -190,7 +184,6 @@ export class MapComponent implements OnInit {
   }
 
   closeArticle(event: boolean) {
-    console.log(322);
     this.articleOpened = event;
     this.cdr.detectChanges();
   }
