@@ -5,6 +5,7 @@ import {User} from '../entities/user';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Contact} from '../entities/contact';
 import { MatDialogConfig } from '@angular/material/dialog';
+import { RequestService } from '../services/request.service';
 
 @Component({
   selector: 'app-profile',
