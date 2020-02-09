@@ -46,15 +46,39 @@
       <clr-modal [(clrModalOpen)]="opened">
         <h3 class="modal-title">Send request to {{username}}</h3>
         <div class="modal-body">
-            <input clrInput placeholder="Message" name="input" [(ngModel)]="requestMessage">
-            </div>
-            <div class="modal-footer">
-            <button (click)="sendRequest()" class="btn btn-primary">Send</button>
-            </div>
-        </clr-modal>
+          <input clrInput placeholder="Message" name="input" [(ngModel)]="requestMessage">
+        </div>
+        <div class="modal-footer">
+          <button (click)="sendRequest()" class="btn btn-primary">Send</button>
+        </div>
+      </clr-modal>
     </div>
     <div class="requests">
-        
+      <clr-datagrid *ngIf="incomingRequests">
+        <clr-dg-column>From</clr-dg-column>
+        <clr-dg-column>Message</clr-dg-column>
+        <clr-dg-column>Date</clr-dg-column>
+        <clr-dg-column>Accept</clr-dg-column>
+        <clr-dg-column>Decline</clr-dg-column>
+
+        <clr-dg-row *ngFor="let request of incomingRequests">
+          <clr-dg-cell><div>{{request.from.username}}</div></clr-dg-cell>
+          <clr-dg-cell>{{request.message}}</clr-dg-cell>
+          <clr-dg-cell>{{request.date | date}}</clr-dg-cell>
+          <clr-dg-cell>
+            <button type="button" class="btn btn-icon btn-success" aria-label="done">
+              <clr-icon shape="check"></clr-icon>
+            </button>
+          </clr-dg-cell>
+          <clr-dg-cell>
+            <button type="button" class="btn btn-icon btn-warning" aria-label="warning">
+              <clr-icon shape="times"></clr-icon>
+            </button>
+          </clr-dg-cell>
+        </clr-dg-row>
+
+        <clr-dg-footer>{{incomingRequests.length}} requests</clr-dg-footer>
+      </clr-datagrid>
     </div>
   </div>
 </section>
