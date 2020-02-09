@@ -31,6 +31,7 @@
     "@clr/ui": "2.3.6",
     "@webcomponents/custom-elements": "^1.0.0",
     "angular8-yandex-maps": "^1.11.0",
+    "modal": "^1.2.0",
     "ng-multiselect-dropdown": "^0.2.10",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
