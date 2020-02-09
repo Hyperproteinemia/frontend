@@ -28,4 +28,10 @@ export class UserService {
     return this.http.patch('/api/user/contacts', contacts);
   }
 
+  updateAvatar(avatar: File) {
+    const body = new FormData();
+    body.set('file', avatar);
+    return this.http.post('/api/user/username/avatar', body);
+  }
+
 }

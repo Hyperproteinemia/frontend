@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AccountService } from '../services/account.service';
-import { UserService } from '../services/user.service';
-import { User } from '../entities/user';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Contact } from '../entities/contact';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {AccountService} from '../services/account.service';
+import {UserService} from '../services/user.service';
+import {User} from '../entities/user';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Contact} from '../entities/contact';
 
 @Component({
   selector: 'app-profile',
@@ -21,16 +21,19 @@ export class ProfileComponent implements OnInit {
   avatar: any;
 
   constructor(private userService: UserService,
-    private route: ActivatedRoute, private authService: AccountService,
-    private router: Router) { }
+              private route: ActivatedRoute, private authService: AccountService,
+              private router: Router) {
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.username = params.username;
       this.userService.getUserById(params.username).subscribe(success => {
-        this.user = success;
-      },
-        error => { this.user = undefined});
+          this.user = success;
+        },
+        error => {
+          this.user = undefined
+        });
     });
     if (this.authService.user != undefined)
       this.myName = this.authService.user.username;
@@ -44,7 +47,7 @@ export class ProfileComponent implements OnInit {
   }
 
   openEditor() {
-    this.router.navigateByUrl('/mutable-profile/'+this.username);
+    this.router.navigateByUrl('/mutable-profile/' + this.username);
   }
 
 }

@@ -11,7 +11,8 @@
         <!-- Avatar -->
         <div class="clr-col-sm-12 clr-col-md-4">
             <form clrForm>
-                <input clrInput placeholder="Profile picture" type="file" name="input" [(ngModel)]="avatar" />
+              <input placeholder="Profile picture" type="file" (change)="onFileSelected($event)" accept="image/jpeg,image/png">
+<!--              <input clrInput placeholder="Profile picture" type="file" name="input" [(ngModel)]="avatar" />-->
             </form>
         </div>
         <!-- short data -->
