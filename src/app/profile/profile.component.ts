@@ -4,7 +4,8 @@ import {UserService} from '../services/user.service';
 import {User} from '../entities/user';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Contact} from '../entities/contact';
-import { MatDialogConfig } from '@angular/material/dialog';
+import {MatDialogConfig} from '@angular/material/dialog';
+import {RequestService} from "../services/request.service";
 
 @Component({
   selector: 'app-profile',
@@ -24,17 +25,20 @@ export class ProfileComponent implements OnInit {
   requestExists: boolean = false;
 
   constructor(private userService: UserService,
-    private route: ActivatedRoute, private authService: AccountService,
-    private router: Router, private requestService: RequestService) { }
+              private route: ActivatedRoute, private authService: AccountService,
+              private router: Router, private requestService: RequestService) {
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.username = params.username;
       this.userService.getUserById(params.username).subscribe(success => {
-        this.user = success;
-        this.areContactsPrivate = this.user.privateContacts;
-      },
-        error => { this.user = undefined});
+          this.user = success;
+          this.areContactsPrivate = this.user.privateContacts;
+        },
+        error => {
+          this.user = undefined
+        });
     });
     if (this.authService.user != undefined)
       this.myName = this.authService.user.username;
@@ -57,9 +61,9 @@ export class ProfileComponent implements OnInit {
   }
 
   sendRequest() {
-      this.requestService.sendRequest(this.username, this.requestMessage).subscribe(response => {
-        this.opened = false;
-      });
+    this.requestService.sendRequest(this.username, this.requestMessage).subscribe(response => {
+      this.opened = false;
+    });
   }
 
 }
