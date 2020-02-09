@@ -1,48 +1,52 @@
 <section id="immutable-profile" class="profile">
-    <div *ngIf="user == undefined">
-        User {{username}} is not found!
-    </div>
+  <div *ngIf="user == undefined">
+    User {{username}} is not found!
+  </div>
 
-    <div *ngIf="user != undefined" class="clr-row">
-        <!-- Header -->
-        <div class="clr-col-sm-12">
-            <h2>{{user.username}}</h2>
-        </div>
-        <!-- avatar -->
-        <div class="clr-col-sm-12 clr-col-md-4">
-            <img src="" class="avatar">
-        </div>
-        <!-- short data -->
-        <div class="clr-col-sm-12 clr-col-md-4">
-            <h4>First name</h4>
-            {{user.name | notSetPipe}}
-            <h4>Country</h4>
-            {{user.country | notSetPipe}}
-        </div>
-        <div class="clr-col-sm-12 clr-col-md-4">
-            <h4>Last name</h4>
-            {{user.surname | notSetPipe}}
-            <h4>City</h4>
-            {{user.city | notSetPipe}}
-        </div>
-        <!-- Biography -->
-        <div class="clr-col-sm-12 clr-col-md-12">
-            <h3>Biography</h3>
-            {{user.bio | notSetPipe}}
-        </div>
-        <!-- Contacts -->
-        <div class="clr-col-sm-12">
-            <h3>Contacts</h3>
-            <label *ngIf="areContactsPrivate">Private</label>
-            <label *ngIf="!areContactsPrivate">Public</label>
-            <ul *ngIf="!areContactsPrivate || myName == user.username">
-                <li *ngFor="let contact of contacts">{{contact.type}}:{{contact.value}}</li>
-            </ul>
-            <button *ngIf="areContactsPrivate && myName != undefined && myName !== user.username" class="btn btn-outline">Request contacts</button>
-        </div>
-        <div class="clr-col-sm-12">
-            <button *ngIf="myName != undefined && myName == user.username" (click)="openEditor()" class="btn btn-outline">Edit profile</button>
-        </div>
-
+  <div *ngIf="user != undefined" class="clr-row">
+    <!-- Header -->
+    <div class="clr-col-sm-12">
+      <div class="username">
+        <h2>{{user.username}}</h2>
+        <button *ngIf="myName != undefined && myName == user.username" (click)="openEditor()" class="btn btn-outline">
+          Edit
+          profile
+        </button>
+      </div>
     </div>
+    <!-- avatar -->
+    <div class="clr-col-sm-12 clr-col-md-4">
+      <img src="" class="avatar">
+    </div>
+    <!-- short data -->
+    <div class="clr-col-sm-12 clr-col-md-4">
+      <h4>First name</h4>
+      {{user.name | notSetPipe}}
+      <h4>Country</h4>
+      {{user.country | notSetPipe}}
+    </div>
+    <div class="clr-col-sm-12 clr-col-md-4">
+      <h4>Last name</h4>
+      {{user.surname | notSetPipe}}
+      <h4>City</h4>
+      {{user.city | notSetPipe}}
+    </div>
+    <!-- Biography -->
+    <div class="clr-col-sm-12 clr-col-md-12">
+      <h3>Biography</h3>
+      {{user.bio | notSetPipe}}
+    </div>
+    <!-- Contacts -->
+    <div class="clr-col-sm-12">
+      <h3>Contacts</h3>
+      <label *ngIf="areContactsPrivate">Private</label>
+      <label *ngIf="!areContactsPrivate">Public</label>
+      <ul *ngIf="!areContactsPrivate || myName == user.username">
+        <li *ngFor="let contact of contacts">{{contact.type}}:{{contact.value}}</li>
+      </ul>
+      <button *ngIf="areContactsPrivate && myName != undefined && myName !== user.username" class="btn btn-outline">
+        Request contacts
+      </button>
+    </div>
+  </div>
 </section>
