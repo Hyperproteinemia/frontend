@@ -1,6 +1,6 @@
 <div class="content-container">
   <div class="content-area">
-    <angular-yandex-map [center]="[55.751952, 37.600739]" [options]="mapOptions" [zoom]="12" [clusterer]="clusterer"
+    <angular-yandex-map [center]="[55.751952, 37.600739]" [options]="mapOptions" [zoom]="15" [clusterer]="clusterer"
                         (load)="onMapLoad($event)">
       <angular-yandex-control [type]="'Button'" *ngIf="auth.user"
                               [parameters]="addButtonParams" (load)="addButtonLoad($event)">

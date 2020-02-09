@@ -124,8 +124,8 @@ export class MapComponent implements OnInit {
 
   addNewArea = (event) => {
     this.circle = new this.ymaps.Circle([
-      [55.76, 37.60],
-      1000
+      this.map.getCenter(),
+      150
     ], {}, this.circleParams);
     this.map.geoObjects.add(this.circle);
     this.circle.editor.startEditing();
