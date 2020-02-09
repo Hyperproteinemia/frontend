@@ -64,11 +64,11 @@
         <clr-dg-row *ngFor="let request of incomingRequests; let i = index">
           <span *ngIf="request.confirmed == undefined">
           <clr-dg-cell><div>{{request.from.username}}</div></clr-dg-cell>
-           *ngIf="request.confirmed == undefined"<clr-dg-cell>{{request.message}}</clr-dg-cell>
+           <clr-dg-cell>{{request.message}}</clr-dg-cell>
           <clr-dg-cell>{{request.date | date}}</clr-dg-cell>
           <clr-dg-cell>
             <button type="button" class="btn btn-icon btn-success" (click)="acceptRequest(i)"
-                               aria-label="done">
+                    aria-label="done">
               <clr-icon shape="check"></clr-icon>
             </button>
           </clr-dg-cell>
