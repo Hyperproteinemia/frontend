@@ -1,26 +1,26 @@
-<header class="header-6">
-<div class="branding">
+<clr-header class="header-6">
+  <div class="branding">
     <a routerLink="map" routerLinkActive="active" class="nav-link">
-        <span class="title">DiscoverMoscow</span>
+      <span class="title">DiscoverMoscow</span>
     </a>
-</div>
-<div class="header-nav">
+  </div>
+  <div class="header-nav" [clr-nav-level]="1">
     <a routerLink="map" routerLinkActive="active" class="nav-link nav-text">Map</a>
     <a routerLink="qa" routerLinkActive="active" class="nav-link nav-text">Q&A</a>
-</div>
-<div class="header-actions">
+  </div>
+  <div class="header-actions">
     <clr-dropdown *ngIf="auth.user != undefined">
-        <button class="nav-icon" clrDropdownTrigger>
-            <clr-icon shape="user"></clr-icon>
-            <clr-icon shape="caret down"></clr-icon>
-        </button>
-        <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-            <a [routerLink]="'profile/' + auth.user.username" clrDropdownItem>Profile</a>
-            <a (click)="logout()" clrDropdownItem>Log out</a>
-        </clr-dropdown-menu>
+      <button class="nav-icon" clrDropdownTrigger>
+        <clr-icon shape="user"></clr-icon>
+        <clr-icon shape="caret down"></clr-icon>
+      </button>
+      <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+        <a [routerLink]="'profile/' + auth.user.username" clrDropdownItem>Profile</a>
+        <a (click)="logout()" clrDropdownItem>Log out</a>
+      </clr-dropdown-menu>
     </clr-dropdown>
     <a *ngIf="auth.user == undefined" routerLink="login" class="nav-link nav-text">
-        Sign in
+      Sign in
     </a>
-</div>
-</header>
+  </div>
+</clr-header>
