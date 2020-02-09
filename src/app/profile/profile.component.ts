@@ -3,7 +3,6 @@ import { AccountService } from '../services/account.service';
 import { UserService } from '../services/user.service';
 import { User } from '../entities/user';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Contact } from '../entities/contact';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +15,6 @@ export class ProfileComponent implements OnInit {
   user: User;
   username: string;
   myName: string;
-  contacts: Contact[];
   areContactsPrivate: boolean;
   avatar: any;
 
@@ -29,6 +27,7 @@ export class ProfileComponent implements OnInit {
       this.username = params.username;
       this.userService.getUserById(params.username).subscribe(success => {
         this.user = success;
+        this.areContactsPrivate = this.user.privateContacts;
       },
         error => { this.user = undefined});
     });
@@ -36,10 +35,8 @@ export class ProfileComponent implements OnInit {
       this.myName = this.authService.user.username;
 
     this.userService.getContacts(this.username).subscribe(data => {
-      this.contacts = data;
-      this.areContactsPrivate = false;
-    }, error => {
-      this.areContactsPrivate = true;
+      this.user.contacts = data;
+      console.log(data);
     });
   }
 

@@ -29,7 +29,7 @@ export class AccountService {
   }
 
   public signUp(username: string, email: string, password: string) {
-    return this.http.post('/api/auth/signup', {username, password});
+    return this.http.post('/api/auth/signup', {username: username, email: email, password: password});
   }
 
   constructor(private http: HttpClient) {

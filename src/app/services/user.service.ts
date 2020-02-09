@@ -25,7 +25,7 @@ export class UserService {
   }
 
   updateContacts(contacts: Contact[]) {
-    return this.http.patch('/api/user/contacts', contacts);
+    return this.http.post('/api/user/contacts', contacts);
   }
 
 }

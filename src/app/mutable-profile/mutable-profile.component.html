@@ -40,6 +40,7 @@
             <input clrInput placeholder="WhatsApp" name="input" [(ngModel)]="whatsAppNumber" />
             <input clrInput placeholder="Mobile phone" name="input" [(ngModel)]="mobilePhone" />
             <input clrInput placeholder="Instagram" name="input" [(ngModel)]="instagramName" />
+            <input type="checkbox" [(ngModel)]="user.privateContacts"/> Private contacts
         </div>
         <div class="clr-col-sm-12">
             <button (click)="saveBio()" class="btn btn-primary">Save profile</button>
