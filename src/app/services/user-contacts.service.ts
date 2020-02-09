@@ -101,4 +101,12 @@ public setInstagram(user: User, number: string) {
   }
 }
 
+public getContact(type: ContactType,data: Contact[]) : string {
+  data.forEach(cont =>  {
+    if (cont.type == type)
+      return cont.value;
+  });
+  return '';
+}
+
 }

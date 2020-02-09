@@ -3,7 +3,7 @@ import {UserService} from '../services/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AccountService} from '../services/account.service';
 import {User} from '../entities/user';
-import {Contact} from '../entities/contact';
+import {Contact, ContactType} from '../entities/contact';
 import {UserContactsService} from '../services/user-contacts.service';
 
 @Component({
@@ -21,7 +21,6 @@ export class MutableProfileComponent implements OnInit {
   public user: User;
   username: string;
   myName: string;
-  contacts: Contact[];
   areContactsPrivate: boolean;
   avatar: any;
 
@@ -47,35 +46,34 @@ export class MutableProfileComponent implements OnInit {
 
     this.userService.getContacts(this.username).subscribe(data => {
       this.user.contacts = data;
-      this.contacts = data;
+      console.log(data);
+      this.telegramNumber = this.userContactService.getContact(ContactType.TELEGRAM, data);
+      this.whatsAppNumber = this.userContactService.getContact(ContactType.WHATSAPP, data);
+      this.mobilePhone = this.userContactService.getContact(ContactType.MOBILE, data);
+      this.instagramName = this.userContactService.getContact(ContactType.INSTAGRAM, data);
     });
 
   }
 
   saveContacts() {
-    if (this.telegramNumber !== this.userContactService.getTelegram(this.user)) {
-      this.userContactService.setTelegram(this.user, this.telegramNumber);
-    }
-    if (this.whatsAppNumber !== this.userContactService.getWhatsApp(this.user)) {
-      this.userContactService.setTelegram(this.user, this.telegramNumber);
-    }
-    if (this.mobilePhone !== this.userContactService.getMobileNumber(this.user)) {
-      this.userContactService.setTelegram(this.user, this.telegramNumber);
-    }
-    if (this.instagramName !== this.userContactService.getInstagram(this.user)) {
-      this.userContactService.setTelegram(this.user, this.telegramNumber);
-    }
-    this.contacts = this.user.contacts;
+    if (this.telegramNumber != '')
+    this.userContactService.setTelegram(this.user, this.telegramNumber);
+    if (this.whatsAppNumber != '')
+    this.userContactService.setWhatsApp(this.user, this.whatsAppNumber);
+    if (this.mobilePhone != '')
+      this.userContactService.setPhoneNumber(this.user, this.mobilePhone);
+    if (this.instagramName != '')
+      this.userContactService.setInstagram(this.user, this.instagramName);
   }
 
   saveBio() {
     console.log(this.user);
-    console.log(this.avatar);
     this.saveContacts();
     this.userService.updateBio(this.user).subscribe(res => {
-      this.router.navigateByUrl('/profile/' + this.username);
+      this.userService.updateContacts(this.user.contacts).subscribe(res => {
+        this.router.navigateByUrl('/profile/'+this.username);
+      });
     });
-    this.userService.updateContacts(this.user.contacts);
     if (this.avatar) {
       this.userService.updateAvatar(this.avatar).subscribe(res => {
         console.log(res);

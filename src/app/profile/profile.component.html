@@ -39,14 +39,22 @@
     <!-- Contacts -->
     <div class="clr-col-sm-12">
       <h3>Contacts</h3>
-      <label *ngIf="areContactsPrivate">Private</label>
-      <label *ngIf="!areContactsPrivate">Public</label>
       <ul *ngIf="!areContactsPrivate || myName == user.username">
-        <li *ngFor="let contact of contacts">{{contact.type}}:{{contact.value}}</li>
+        <li *ngFor="let contact of user.contacts">{{contact.type}}:{{contact.value}}</li>
       </ul>
-      <button *ngIf="areContactsPrivate && myName != undefined && myName !== user.username" class="btn btn-outline">
-        Request contacts
-      </button>
+      <button *ngIf="!requestExists" (click)="opened = true;" class="btn btn-primary">Send request</button>
+      <clr-modal [(clrModalOpen)]="opened">
+        <h3 class="modal-title">Send request to {{username}}</h3>
+        <div class="modal-body">
+            <input clrInput placeholder="Message" name="input" [(ngModel)]="requestMessage">
+            </div>
+            <div class="modal-footer">
+            <button (click)="sendRequest()" class="btn btn-primary">Send</button>
+            </div>
+        </clr-modal>
+    </div>
+    <div class="requests">
+        
     </div>
   </div>
 </section>
