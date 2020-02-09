@@ -26,8 +26,8 @@
   </div>
 </div>
 
-<clr-modal class="article" [(clrModalOpen)]="newAnswerOpened">
-  <h3 class="modal-title">Ask new question</h3>
+<clr-modal *ngIf="auth.user" class="article" [(clrModalOpen)]="newAnswerOpened">
+  <h3 class="modal-title">Write your answer</h3>
   <div class="modal-body">
     <form class="example-form">
       <textarea [(ngModel)]="answerText" class="textarea" placeholder="Ex. It makes me feel..."

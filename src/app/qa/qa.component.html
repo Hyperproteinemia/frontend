@@ -1,5 +1,5 @@
 <div class="qa">
-  <button type="button" class="btn btn-icon" aria-label="home" (click)="openModal($event)">
+  <button *ngIf="auth.user" type="button" class="btn btn-icon" aria-label="home" (click)="openModal($event)">
     <clr-icon shape="plus"></clr-icon>
     Ask new question
   </button>
