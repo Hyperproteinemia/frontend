@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {QaService} from '../../services/qa.service';
 import {Question} from '../../entities/question';
+import {AccountService} from "../../services/account.service";
 
 @Component({
   selector: 'app-question',
@@ -14,7 +15,8 @@ export class QuestionComponent implements OnInit {
   answerText = '';
 
   constructor(private route: ActivatedRoute,
-              private qaService: QaService) {
+              private qaService: QaService,
+              public auth: AccountService) {
   }
 
   id: number;

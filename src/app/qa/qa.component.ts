@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {QaService} from '../services/qa.service';
 import {Question} from '../entities/question';
+import {AccountService} from '../services/account.service';
 
 @Component({
   selector: 'app-qa',
@@ -13,7 +14,8 @@ export class QaComponent implements OnInit {
   newQuestionOpened = false;
   questionText = '';
 
-  constructor(private qaService: QaService) {
+  constructor(private qaService: QaService,
+              public auth: AccountService) {
   }
 
   ngOnInit() {

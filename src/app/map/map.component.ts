@@ -8,6 +8,7 @@ import {AreaDto} from '../entities/area-dto';
 import {ArticleService} from '../services/article.service';
 import {Article} from '../entities/article';
 import {IDropdownSettings} from 'ng-multiselect-dropdown';
+import {AccountService} from "../services/account.service";
 
 @Component({
   selector: 'app-map',
@@ -43,7 +44,7 @@ export class MapComponent implements OnInit {
   availableTags: Tag[] = [];
   appliedTags: Tag[] = [];
   dropdownList: any;
-  selectedItems: any;
+  selectedItems: any = [];
   addButtonParams = {
     data: {
       content: 'New Area'
@@ -67,7 +68,8 @@ export class MapComponent implements OnInit {
               private areaService: AreaService,
               private tagService: TagsService,
               private articleService: ArticleService,
-              private ngZone: NgZone) {
+              private ngZone: NgZone,
+              public auth: AccountService) {
   }
 
   ngOnInit() {
@@ -97,11 +99,15 @@ export class MapComponent implements OnInit {
 
   applyFilters() {
     this.map.geoObjects.removeAll();
-    const tagNames = this.appliedTags.map(tag => tag.name);
-    const areas = this.areas.filter(area => {
-      return area.area.article.tags.some(tag => tagNames.includes(tag.name));
-    });
-    this.drawCircles(areas);
+    if (this.appliedTags.length) {
+      const tagNames = this.appliedTags.map(tag => tag.name);
+      const areas = this.areas.filter(area => {
+        return area.area.article.tags.some(tag => tagNames.includes(tag.name));
+      });
+      this.drawCircles(areas);
+      return;
+    }
+    this.drawCircles();
   }
 
   addButtonLoad(event: ILoadEvent) {
@@ -147,6 +153,10 @@ export class MapComponent implements OnInit {
       heading: 'Heading',
       content: this.editorData,
     }, this.selectedItems.map(item => ({name: item.text}))).subscribe(res => {
+      this.areaService.getAreas().subscribe(areas => {
+        this.areas = areas;
+        this.drawCircles();
+      });
     });
     this.editorData = '';
   }
@@ -161,6 +171,7 @@ export class MapComponent implements OnInit {
   }
 
   drawCircles(areas?) {
+    this.map.geoObjects.removeAll();
     areas = areas || this.areas;
     const circles = areas.forEach(area => {
       const circle = new this.ymaps.Circle([
