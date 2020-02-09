@@ -39,6 +39,12 @@ export class MapComponent implements OnInit {
     strokeOpacity: 0.8,
     strokeWidth: 2
   };
+  mapOptions = {
+    restrictMapArea: [
+      [56.003232, 37.075778],
+      [55.513109, 38.320423]
+    ]
+  };
   editorOpened = false;
   currentArticle: Article;
   availableTags: Tag[] = [];
@@ -134,6 +140,7 @@ export class MapComponent implements OnInit {
   onMapLoad(event: ILoadEvent) {
     this.ymaps = event.ymaps;
     this.map = event.instance;
+    this.map.controls.remove('fullscreenControl');
     this.areaService.getAreas().subscribe(areas => {
       this.areas = areas;
       this.drawCircles();
