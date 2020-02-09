@@ -1,0 +1,48 @@
+<section id="mutable-profile" class="profile">
+    <div *ngIf="user == undefined">
+        User {{username}} is not found!
+    </div>
+
+    <div *ngIf="user != undefined" class="clr-row">
+        <!-- Header -->
+        <div class="clr-col-sm-12">
+            <h2>{{user.username}}</h2>
+        </div>
+        <!-- Avatar -->
+        <div class="clr-col-sm-12 clr-col-md-4">
+            <form clrForm>
+                <input clrInput placeholder="Profile picture" type="file" name="input" [(ngModel)]="avatar" />
+            </form>
+        </div>
+        <!-- short data -->
+        <div class="clr-col-sm-12 clr-col-md-4">
+            <form clrForm>
+                <input clrInput placeholder="First name" name="userName" [(ngModel)]="user.name" />
+                <input clrInput placeholder="Country" name="userCountry" [(ngModel)]="user.country" />
+            </form>
+        </div>
+        <div class="clr-col-sm-12 clr-col-md-4">
+            <form clrForm>
+                <input clrInput placeholder="Last name" name="userSurname" [(ngModel)]="user.surname" />
+                <input clrInput placeholder="City" name="userCity" [(ngModel)]="user.city" />
+            </form>
+        </div>
+        <!-- Biography -->
+        <div class="clr-col-sm-12 clr-col-md-12">
+            <h3>Biography</h3>
+            <form>
+                <textarea clrTextarea [(ngModel)]="user.bio" name="description" class="expandible-textarea" required></textarea>
+            </form>
+        </div>
+        <div class="clr-col-sm-12">
+            <h3>Input your contacts:</h3>
+            <input clrInput placeholder="Telegram" name="input" [(ngModel)]="telegramNumber" />
+            <input clrInput placeholder="WhatsApp" name="input" [(ngModel)]="whatsAppNumber" />
+            <input clrInput placeholder="Mobile phone" name="input" [(ngModel)]="mobilePhone" />
+            <input clrInput placeholder="Instagram" name="input" [(ngModel)]="instagramName" />
+        </div>
+        <div class="clr-col-sm-12">
+            <button (click)="saveBio()" class="btn btn-primary">Save profile</button>
+        </div>
+    </div>
+</section>

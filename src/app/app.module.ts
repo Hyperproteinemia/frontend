@@ -22,6 +22,8 @@ import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 import {QaComponent} from './qa/qa.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { QuestionComponent } from './qa/question/question.component';
+import { NotSetPipePipe } from './not-set-pipe.pipe';
+import { MutableProfileComponent } from './mutable-profile/mutable-profile.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { QuestionComponent } from './qa/question/question.component';
     LoginComponent,
     SignupComponent,
     QaComponent,
-    QuestionComponent
+    QuestionComponent,
+    NotSetPipePipe,
+    MutableProfileComponent
   ],
   imports: [
     BrowserModule,

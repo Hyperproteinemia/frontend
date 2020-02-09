@@ -1,53 +1,48 @@
-<section class="profile">
-<div *ngIf="user == undefined">
-    User {{username}} is not found!
-</div>
-<div *ngIf="user != undefined">
-<h2>{{user.username}}</h2>
-<div class="clr-row">
-    <div class="clr-col-sm-12 clr-col-md-3">
-        <img src="" class="avatar">
+<section id="immutable-profile" class="profile">
+    <div *ngIf="user == undefined">
+        User {{username}} is not found!
     </div>
-    <div class="clr-col-sm-12 clr-col-md-9">
-        <div id="country-output" *ngIf="user.country != undefined">
-            <h3>Country</h3>
-            {{user.country}}
+
+    <div *ngIf="user != undefined" class="clr-row">
+        <!-- Header -->
+        <div class="clr-col-sm-12">
+            <h2>{{user.username}}</h2>
         </div>
-        <input clrInput id="country-input" class="invisible" [(ngModel)]="user.country" placeholder="Your country">
-        <div id="city-output" *ngIf="user.city != undefined">
-            <h3>City</h3>
-            {{user.city}}
+        <!-- avatar -->
+        <div class="clr-col-sm-12 clr-col-md-4">
+            <img src="" class="avatar">
         </div>
-        <input clrInput id="city-input" class="invisible" [(ngModel)]="user.city" placeholder="Your city">
-        <h3>Biography</h3>
-        <div id="bio-immutable">
-            {{user.bio}}
+        <!-- short data -->
+        <div class="clr-col-sm-12 clr-col-md-4">
+            <h4>First name</h4>
+            {{user.name | notSetPipe}}
+            <h4>Country</h4>
+            {{user.country | notSetPipe}}
+        </div>
+        <div class="clr-col-sm-12 clr-col-md-4">
+            <h4>Last name</h4>
+            {{user.surname | notSetPipe}}
+            <h4>City</h4>
+            {{user.city | notSetPipe}}
+        </div>
+        <!-- Biography -->
+        <div class="clr-col-sm-12 clr-col-md-12">
+            <h3>Biography</h3>
+            {{user.bio | notSetPipe}}
+        </div>
+        <!-- Contacts -->
+        <div class="clr-col-sm-12">
+            <h3>Contacts</h3>
+            <label *ngIf="areContactsPrivate">Private</label>
+            <label *ngIf="!areContactsPrivate">Public</label>
+            <ul *ngIf="!areContactsPrivate || myName == user.username">
+                <li *ngFor="let contact of contacts">{{contact.type}}:{{contact.value}}</li>
+            </ul>
+            <button *ngIf="areContactsPrivate && myName != undefined && myName !== user.username" class="btn btn-outline">Request contacts</button>
+        </div>
+        <div class="clr-col-sm-12">
             <button *ngIf="myName != undefined && myName == user.username" (click)="openEditor()" class="btn btn-outline">Edit profile</button>
         </div>
 
-        <div id="bio-mutable" class="invisible">
-            <form>
-                <textarea clrTextarea [(ngModel)]="user.bio" name="description" class="expandible-textarea" required></textarea>
-            </form>
-            <button (click)="saveBio()" class="btn btn-primary">Save profile</button>
-        </div>
-        
     </div>
-    
-</div>
-<div class="contacts">
-    <h3>Contacts</h3>
-    <button *ngIf="areContactsPrivate && myName !== user.username" class="btn btn-outline">Request contacts</button>
-    <ul *ngIf="!areContactsPrivate">
-        <li *ngFor="let contact of contacts">{{contact.value}}</li>
-    </ul>
-</div>
-<div id="contacts-input" class="invisible">
-    Input your contacts:
-    <input clrInput placeholder="Telegram" name="input" [(ngModel)]="telegramNumber" />
-    <input clrInput placeholder="WhatsApp" name="input" [(ngModel)]="whatsAppNumber" />
-    <input clrInput placeholder="Mobile phone" name="input" [(ngModel)]="mobilePhone" />
-    <input clrInput placeholder="Instagram" name="input" [(ngModel)]="instagramName" />
-</div>
-</div>
 </section>
