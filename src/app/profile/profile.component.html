@@ -61,13 +61,14 @@
         <clr-dg-column>Accept</clr-dg-column>
         <clr-dg-column>Decline</clr-dg-column>
 
-        <clr-dg-row *ngFor="let request of incomingRequests; let i = index" >
+        <clr-dg-row *ngFor="let request of incomingRequests; let i = index">
           <span *ngIf="request.confirmed == undefined">
           <clr-dg-cell><div>{{request.from.username}}</div></clr-dg-cell>
            *ngIf="request.confirmed == undefined"<clr-dg-cell>{{request.message}}</clr-dg-cell>
           <clr-dg-cell>{{request.date | date}}</clr-dg-cell>
           <clr-dg-cell>
-             *ngIf="request.confirmed == undefined"<button type="button" class="btn btn-icon btn-success" (click)="acceptRequest(i)" aria-label="done">
+            <button type="button" class="btn btn-icon btn-success" (click)="acceptRequest(i)"
+                               aria-label="done">
               <clr-icon shape="check"></clr-icon>
             </button>
           </clr-dg-cell>
@@ -77,9 +78,9 @@
             </button>
           </clr-dg-cell>
           </span>
-   </clr-dg-row>
+        </clr-dg-row>
 
-   <clr-dg-footer>{{incomingRequests.length}} requests</clr-dg-footer>
+        <clr-dg-footer>{{incomingRequests.length}} requests</clr-dg-footer>
       </clr-datagrid>
     </div>
   </div>
