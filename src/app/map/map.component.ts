@@ -8,6 +8,7 @@ import {AreaDto} from '../entities/area-dto';
 import {ArticleService} from '../services/article.service';
 import {Article} from '../entities/article';
 import {IDropdownSettings} from 'ng-multiselect-dropdown';
+import {AccountService} from "../services/account.service";
 
 @Component({
   selector: 'app-map',
@@ -67,7 +68,8 @@ export class MapComponent implements OnInit {
               private areaService: AreaService,
               private tagService: TagsService,
               private articleService: ArticleService,
-              private ngZone: NgZone) {
+              private ngZone: NgZone,
+              public auth: AccountService) {
   }
 
   ngOnInit() {
