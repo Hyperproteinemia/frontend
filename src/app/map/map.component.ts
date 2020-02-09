@@ -39,6 +39,7 @@ export class MapComponent implements OnInit {
     strokeOpacity: 0.8,
     strokeWidth: 2
   };
+  heading = '';
   mapOptions = {
     restrictMapArea: [
       [56.003232, 37.075778],
@@ -144,6 +145,7 @@ export class MapComponent implements OnInit {
     this.areaService.getAreas().subscribe(areas => {
       this.areas = areas;
       this.drawCircles();
+      this.cdr.detectChanges();
     });
   }
 
@@ -157,14 +159,16 @@ export class MapComponent implements OnInit {
       x: this.circle.geometry.getCoordinates()[0],
       y: this.circle.geometry.getCoordinates()[1]
     }, {
-      heading: 'Heading',
+      heading: this.heading,
       content: this.editorData,
     }, this.selectedItems.map(item => ({name: item.text}))).subscribe(res => {
       this.areaService.getAreas().subscribe(areas => {
         this.areas = areas;
         this.drawCircles();
+        this.cdr.detectChanges();
       });
     });
+    this.heading = ''
     this.editorData = '';
   }
 
@@ -186,8 +190,7 @@ export class MapComponent implements OnInit {
         area.area.radius
       ], {}, this.circleParams);
       circle.events.add('click', (event) => {
-        this.ngZone.run(() => this.showArticle(area.articleId))
-        ;
+        this.ngZone.run(() => this.showArticle(area.articleId));
       });
       this.map.geoObjects.add(circle);
     });

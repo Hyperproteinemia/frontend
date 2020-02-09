@@ -25,6 +25,19 @@
                                                            class="label clickable">{{appliedTag.name}}</span></li>
         </ul>
       </section>
+      <ng-container *ngIf="areas">
+        <ng-container *ngFor="let areaDto of areas">
+          <div class="card">
+            <div class="card-header">
+              {{areaDto.area.article.heading}}
+            </div>
+            <div class="card-block">
+              <div class="card-text" [innerHTML]="areaDto.area.article.content">
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
     </section>
   </nav>
 </div>
@@ -32,6 +45,12 @@
            [clrModalClosable]="false">
   <h3 class="modal-title">Area description</h3>
   <div class="modal-body">
+    <form clrForm>
+      <clr-input-container>
+        <label>Heading</label>
+        <input clrInput placeholder="Heading" name="name" [(ngModel)]="heading"/>
+      </clr-input-container>
+    </form>
     <ckeditor [editor]="editor" [config]="editorConfig" [(ngModel)]="editorData"></ckeditor>
     <ng-multiselect-dropdown
       [placeholder]="'Tags'"
