@@ -5,5 +5,5 @@ export class Request {
     confirmed: boolean;
     date: Date;
     to: string;
-    from: string;
+    from: User;
 }
